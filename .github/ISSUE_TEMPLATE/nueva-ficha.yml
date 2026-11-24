@@ -1,0 +1,18 @@
+name: Nueva ficha o mejora de contenido
+description: Propón una clase de vulnerabilidad nueva o mejoras a una ficha existente
+labels: [contenido]
+body:
+  - type: input
+    id: clase
+    attributes:
+      label: Clase de vulnerabilidad
+      placeholder: "XS-Leaks, inyección CSS, WebSocket smuggling…"
+    validations:
+      required: true
+  - type: textarea
+    id: propuesta
+    attributes:
+      label: Qué añadirías
+      description: Técnicas, payloads, herramientas y fuentes (OWASP, PortSwigger, papers…).
+    validations:
+      required: true

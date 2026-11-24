@@ -1,0 +1,61 @@
+/* CORVUS Red — estilo del informe (pantalla e impresión A4) */
+@page { size: A4; margin: 18mm 16mm 20mm 16mm; }
+* { box-sizing: border-box; }
+html { font-size: 10.5pt; }
+body { margin: 0; color: var(--texto); background: #fff;
+  font-family: "Segoe UI", "Inter", "Helvetica Neue", Arial, sans-serif; line-height: 1.5; }
+.doc { max-width: 920px; margin: 0 auto; padding: 24px 28px 60px; }
+.run-head { max-width: 920px; margin: 0 auto; padding: 10px 28px; font-size: .8rem; letter-spacing: .08em;
+  text-transform: uppercase; color: #777; border-bottom: 2px solid var(--primario); }
+
+/* Portada */
+.cover { min-height: 100vh; background: var(--oscuro); color: var(--acento); display: flex; flex-direction: column;
+  justify-content: center; padding: 10vh 10%; page-break-after: always; break-after: page; position: relative; }
+.cover-logo svg { width: 110px; height: 110px; }
+.cover-brand { margin-top: 18px; font-size: 2.4rem; font-weight: 800; letter-spacing: .12em; }
+.cover-brand span { display: block; font-size: .95rem; font-weight: 400; letter-spacing: .4em; color: var(--primario);
+  text-transform: uppercase; margin-top: 4px; }
+.cover-tag { margin-top: 10px; font-style: italic; color: #b9b6ae; }
+.cover-title { margin: 12vh 0 6px; font-size: 2.1rem; border: 0; color: #fff; }
+.cover-eng { font-size: 1.3rem; color: var(--primario); font-weight: 600; }
+.cover-meta { margin-top: 28px; color: #b9b6ae; }
+.cover-class { position: absolute; bottom: 6vh; left: 10%; right: 10%; padding-top: 10px; font-size: .8rem;
+  letter-spacing: .15em; text-transform: uppercase; border-top: 1px solid #333; color: #8a8780; }
+
+/* Tipografía */
+h1 { font-size: 1.7rem; color: var(--oscuro); border-bottom: 3px solid var(--primario); padding-bottom: 6px; margin-top: 0; }
+h2 { font-size: 1.35rem; color: var(--oscuro); margin-top: 2.2em; padding-left: 10px; border-left: 5px solid var(--primario);
+  break-after: avoid; }
+h3 { font-size: 1.15rem; color: var(--primario); margin-top: 1.8em; break-after: avoid; }
+h4 { font-size: 1rem; color: var(--oscuro); margin-top: 1.4em; break-after: avoid; }
+h5, h6 { font-size: .95rem; color: #444; }
+a { color: var(--primario); }
+p, li { orphans: 3; widows: 3; }
+blockquote { margin: 1em 0; padding: .6em 1em; background: #f6f5f2; border-left: 4px solid #c9c5bc; color: #444; }
+hr { border: 0; border-top: 1px solid #ddd; margin: 2em 0; }
+
+/* Tablas */
+table { width: 100%; border-collapse: collapse; margin: 1em 0; font-size: .92rem; break-inside: avoid; }
+th { background: var(--oscuro); color: var(--acento); text-align: left; font-weight: 600; }
+th, td { padding: 6px 9px; border: 1px solid #ddd; vertical-align: top; }
+tbody tr:nth-child(even) td { background: #faf9f7; }
+
+/* Código */
+code { font-family: "Cascadia Code", "JetBrains Mono", Consolas, monospace; font-size: .86em; background: #f1efea;
+  padding: 1px 4px; border-radius: 3px; word-break: break-word; }
+pre { background: #15161b; color: #e8e6e1; padding: 12px 14px; border-radius: 6px; overflow-x: auto;
+  white-space: pre-wrap; word-break: break-all; border-left: 4px solid var(--primario); break-inside: avoid; }
+pre code { background: none; padding: 0; color: inherit; font-size: .82rem; }
+
+/* Severidad */
+.sev { display: inline-block; padding: 1px 9px; border-radius: 10px; color: #fff; font-weight: 600; font-size: .82rem; }
+.sev-0 { background: var(--sev-0); } .sev-1 { background: var(--sev-1); } .sev-2 { background: var(--sev-2); }
+.sev-3 { background: var(--sev-3); } .sev-4 { background: var(--sev-4); }
+.pb { break-before: page; page-break-before: always; height: 0; }
+
+@media print {
+  .run-head { position: running(header); }
+  .doc { padding: 0; max-width: none; }
+  .cover { min-height: 257mm; margin: -18mm -16mm 0; padding: 40mm 22mm; }
+  a { color: inherit; text-decoration: none; }
+}

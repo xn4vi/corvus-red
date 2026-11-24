@@ -1,0 +1,37 @@
+{
+  "marca": "CORVUS Red",
+  "submarca": "Offensive Security",
+  "lema": {
+    "es": "Inteligencia ofensiva para aplicaciones web",
+    "en": "Offensive intelligence for web applications"
+  },
+  "auditor": "n4vi",
+  "rol_auditor": {
+    "es": "Auditor de seguridad ofensiva",
+    "en": "Offensive Security Consultant"
+  },
+  "web": "https://github.com/xn4vi/corvus-red",
+  "email": "",
+  "logo": "assets/logo.svg",
+  "colores": {
+    "primario": "#B3121F",
+    "oscuro": "#0E0F13",
+    "acento": "#E8E6E1",
+    "texto": "#1B1C20"
+  },
+  "severidad_colores": {
+    "Crítica": "#7A0010",
+    "Alta": "#D1291C",
+    "Media": "#E08A00",
+    "Baja": "#2B7BB9",
+    "Informativa": "#6B7280"
+  },
+  "clasificacion": {
+    "es": "CONFIDENCIAL — Uso exclusivo del cliente",
+    "en": "CONFIDENTIAL — Client use only"
+  },
+  "aviso_legal": {
+    "es": "Este informe refleja el estado de seguridad de los sistemas evaluados durante el periodo de pruebas indicado y dentro del alcance autorizado. Las pruebas de intrusión son una evaluación en un momento concreto: la ausencia de hallazgos en un área no garantiza la ausencia de vulnerabilidades. La información contenida es confidencial y no debe distribuirse sin el consentimiento del cliente.",
+    "en": "This report reflects the security posture of the assessed systems during the stated testing window and within the authorized scope. Penetration testing is a point-in-time assessment: the absence of findings in an area does not guarantee the absence of vulnerabilities. This document is confidential and must not be distributed without the client's consent."
+  }
+}

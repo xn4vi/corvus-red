@@ -1,0 +1,10 @@
+# Las fichas y los tests contienen, a propósito, ejemplos de formatos de clave (AKIA…, sk_live_…, JWT de muestra).
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Ejemplos didácticos de formatos de secreto"
+paths = [
+  '''^references/''',
+  '''^tests/''',
+]
