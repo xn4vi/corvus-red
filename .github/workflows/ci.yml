@@ -1,0 +1,42 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Tests (Python ${{ matrix.python }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ["3.10", "3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Tests de corvus.py
+        run: python -m unittest discover -s tests -v
+      - name: Fichas y enlaces internos
+        run: python tools/check_refs.py
+
+  secrets:
+    name: Sin secretos ni datos de clientes
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: No hay carpetas de encargos
+        run: |
+          if git ls-files | grep -E '(^|/)(engagements|evidence)/|brand\.local\.json$'; then
+            echo "::error::Hay datos de encargos o configuración local en el repositorio"; exit 1; fi
+      - uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
