@@ -501,6 +501,11 @@ location ^~ /uploads/ {
 | Script Python (`zipfile`) / evilarc | Zip slip | ⚠️ Escritura: solo con confirmación explícita del cliente |
 | Nuclei | Plantillas de CVE de procesadores y CMS | Tras identificar tecnología y versión |
 
+
+### Kit de ficheros PoC inocuos
+
+La carpeta `payloads/upload/` de la skill contiene ficheros listos para estas pruebas. Ninguno ataca de verdad: escriben un marcador en la consola, hacen una petición OAST o imprimen `CORVUS-9359`. Antes de usarlos, sustituye `OAST_DOMAIN` por tu dominio de interactsh o de Collaborator, y renómbralos según la variante que quieras probar (doble extensión, mayúsculas, byte nulo…). Ver `payloads/README.md`.
+
 ## 13. Referencias
 
 - OWASP — File Upload Cheat Sheet: https://cheatsheetseries.owasp.org/cheatsheets/File_Upload_Cheat_Sheet.html

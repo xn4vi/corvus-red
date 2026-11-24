@@ -5,7 +5,7 @@
 **Skill para [Claude Code](https://docs.claude.com/en/docs/claude-code) que convierte a Claude en un auditor de seguridad de aplicaciones web: metódico al reconocer, creativo al atacar, escéptico al validar y claro al informar.**
 
 [![License: MIT](https://img.shields.io/badge/licencia-MIT-B3121F.svg)](LICENSE)
-[![Fichas](https://img.shields.io/badge/fichas-32%20vulns%20%2B%203%20caja%20blanca-0E0F13.svg)](#-índice-de-fichas)
+[![Fichas](https://img.shields.io/badge/fichas-33%20vulns%20%2B%203%20caja%20blanca-0E0F13.svg)](#-índice-de-fichas)
 [![Idioma](https://img.shields.io/badge/idioma-español%20·%20informes%20ES%2FEN-B3121F.svg)](#)
 [![OWASP](https://img.shields.io/badge/OWASP-WSTG%20·%20Top%2010%3A2025%20·%20API%20·%20LLM-0E0F13.svg)](#-metodología)
 [![CI](https://github.com/xn4vi/corvus-red/actions/workflows/ci.yml/badge.svg)](https://github.com/xn4vi/corvus-red/actions/workflows/ci.yml)
@@ -30,6 +30,7 @@ CORVUS Red es una **skill de Claude Code** (un `SKILL.md` con referencias y scri
 | 🤖 **Aplicaciones con IA/LLM** | Inyección directa e indirecta, agencia excesiva, RAG, MCP y exfiltración, con el OWASP LLM Top 10:2025 |
 | 🧬 **Caja blanca** | Modelo de amenazas, SAST, SCA y secretos, rastreo de fuente a sumidero, análisis de variantes, revisión de un PR (`/corvus diff`) |
 | ✅ **Validación en 7 puertas** | Con un **subagente validador independiente** que juzga sin el sesgo de quien encontró el fallo |
+| 🧪 **Kit de PoC inocuos** | SVG, HTML y políglotas con magic bytes que solo dejan un marcador o avisan por OAST |
 | 📄 **Informes con marca** | Markdown, HTML y PDF en español o inglés, con CVSS 3.1 comprobado y priorización de la remediación |
 
 **English:** CORVUS Red is a Claude Code skill for authorized web application security assessments (black/grey-box, APIs, LLM apps, white-box review). It enforces scope and authorization, logs every payload before analysis, redacts secrets from evidence, validates findings with an independent sub-agent, and renders branded ES/EN reports. Content is written in Spanish.
@@ -166,13 +167,14 @@ Cada ficha de [`references/vulns/`](references/vulns) sigue la misma plantilla d
 </details>
 
 <details>
-<summary><b>🌐 Lado cliente</b> (7)</summary>
+<summary><b>🌐 Lado cliente</b> (8)</summary>
 
 | Ficha | Cubre |
 |---|---|
-| [`xss`](references/vulns/xss.md) | Reflejado, almacenado, DOM, mXSS, CSP bypass, dangling markup, frameworks |
+| [`xss`](references/vulns/xss.md) | Reflejado, almacenado, DOM, mXSS, CSP bypass, dangling markup, frameworks, inyección HTML sin JavaScript |
 | [`csrf`](references/vulns/csrf.md) | Matices de SameSite, CSRF con JSON, login CSRF, CSWSH |
 | [`cors`](references/vulns/cors.md) | Origen reflejado con credenciales, `null`, regex mal hechas, PoC HTML |
+| [`xssi`](references/vulns/xssi.md) | JSONP, JavaScript dinámico con datos del usuario, variables globales, condiciones de SameSite |
 | [`clickjacking`](references/vulns/clickjacking.md) | PoC y DoubleClickjacking, con el criterio de cuándo es un hallazgo real |
 | [`open-redirect`](references/vulns/open-redirect.md) | Diferencias entre parsers y cadenas con OAuth, SSRF y `javascript:` |
 | [`prototype-pollution`](references/vulns/prototype-pollution.md) | En el cliente y en el servidor (Node), gadgets y detección no destructiva |
@@ -186,7 +188,7 @@ Cada ficha de [`references/vulns/`](references/vulns) sigue la misma plantilla d
 | Ficha | Cubre |
 |---|---|
 | [`access-control-idor`](references/vulns/access-control-idor.md) | BOLA, BFLA, escalada vertical y horizontal, multiinquilino, normalización de rutas |
-| [`authentication`](references/vulns/authentication.md) | Enumeración, fuerza bruta, MFA, reseteo de contraseña, pre-account takeover |
+| [`authentication`](references/vulns/authentication.md) | Enumeración, fuerza bruta, MFA, reseteo de contraseña, pre-account takeover, variantes de teléfono y OTP para saltar límites |
 | [`jwt`](references/vulns/jwt.md) | `alg:none`, RS→HS, `kid`, `jku`, `jwk`, secretos débiles, psychic signatures |
 | [`oauth-oidc-saml`](references/vulns/oauth-oidc-saml.md) | `redirect_uri`, PKCE, mix-up, nOAuth, XSW, comment injection |
 | [`session`](references/vulns/session.md) | Atributos de cookies, fijación, cookies firmadas, cierre de sesión, puzzling |
@@ -203,7 +205,7 @@ Cada ficha de [`references/vulns/`](references/vulns) sigue la misma plantilla d
 | [`api-rest-grpc-websocket`](references/vulns/api-rest-grpc-websocket.md) | OWASP API Top 10, asignación masiva, versiones, gRPC, WebSockets |
 | [`graphql`](references/vulns/graphql.md) | Introspección y reconstrucción a ciegas, batching, autorización en resolvers, DoS |
 | [`llm-ai`](references/vulns/llm-ai.md) | Inyección directa e indirecta, agencia excesiva, RAG, MCP, exfiltración por Markdown |
-| [`config-exposure`](references/vulns/config-exposure.md) | Cabeceras, TLS, `.git` y `.env`, consolas de depuración, buckets, subdomain takeover, CVE |
+| [`config-exposure`](references/vulns/config-exposure.md) | Cabeceras, TLS, `.git` y `.env`, consolas de depuración, buckets, subdomain takeover, CVE de productos perimetrales y CMS (CISA KEV) |
 | [`waf-bypass`](references/vulns/waf-bypass.md) | Huella del WAF, codificaciones, límites de inspección, IP de origen y ética |
 
 </details>
@@ -240,9 +242,10 @@ corvus-red/
 ├── brand.json               ← marca pública (sobrescribible con brand.local.json)
 ├── references/
 │   ├── 00-alcance-roe.md … 06-herramientas.md    ← guías de fase
-│   ├── vulns/               ← 32 fichas de vulnerabilidad
+│   ├── vulns/               ← 33 fichas de vulnerabilidad
 │   └── whitebox/            ← 3 guías de revisión de código
 ├── templates/               ← scope, coverage, payload-log, notes, tech-stack, hallazgo
+├── payloads/upload/         ← kit de ficheros PoC inocuos (marcadores y OAST, nunca shells)
 ├── scripts/                 ← corvus.py · install.sh · install.ps1
 ├── assets/                  ← logo, banner, CSS del informe, capturas
 ├── examples/juice-shop/     ← informe de ejemplo
@@ -257,7 +260,7 @@ corvus-red/
 - [ ] Calcular CVSS 4.0 en el propio script
 - [ ] Integración probada con Burp Suite y Caido por MCP
 - [ ] Actualizar `coverage.md` automáticamente a partir de `corvus.py http`
-- [ ] Fichas nuevas: XS-Leaks, inyección CSS, WebSocket smuggling, ataques de HTTP/2
+- [ ] Fichas nuevas: XS-Leaks, inyección CSS avanzada, WebSocket smuggling, ataques de HTTP/2
 - [ ] Traducción de las fichas al inglés
 
 ## 🤝 Contribuir

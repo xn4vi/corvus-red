@@ -2,6 +2,16 @@
 
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) y versionado [SemVer](https://semver.org/lang/es/).
 
+## [1.1.0] — 2026-11-24
+
+### Añadido
+- Ficha nueva `xssi` (inclusión de scripts entre sitios: JSONP, JavaScript dinámico, condiciones de SameSite).
+- `xss` §4.14: inyección HTML sin JavaScript (suplantación, formularios falsos, `<base>`, correos transaccionales).
+- `authentication` §4.11: variantes de teléfono (RFC 3966) y de códigos OTP para saltarse los límites de intentos.
+- `01-reconocimiento` §1.1: dorking en Google, Bing, GitHub, Shodan y Censys.
+- `config-exposure` §4.14: método para CVE de productos perimetrales y CMS (CISA KEV y plantillas de nuclei).
+- `payloads/upload/`: kit de ficheros PoC inocuos (SVG, HTML y políglotas con magic bytes) y guía de variantes de nombre.
+
 ## [1.0.0] — 2026-11-24
 
 ### Añadido

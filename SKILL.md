@@ -66,7 +66,7 @@ Carga las referencias **bajo demanda**, solo cuando las necesites. No las leas t
 |---|---|
 | `inyeccion` | `sqli`, `nosqli`, `cmdi-rce`, `ssti`, `xxe`, `deserialization`, `otras-inyecciones` (LDAP, XPath, CRLF, EL, CSV) |
 | `servidor` | `ssrf`, `path-traversal-lfi`, `file-upload`, `request-smuggling`, `cache-poisoning-deception`, `host-header` |
-| `cliente` | `xss`, `csrf`, `cors`, `clickjacking`, `open-redirect`, `prototype-pollution`, `parameter-pollution` |
+| `cliente` | `xss` (incluye inyección HTML sin JavaScript), `csrf`, `cors`, `xssi`, `clickjacking`, `open-redirect`, `prototype-pollution`, `parameter-pollution` |
 | `acceso` | `access-control-idor`, `authentication`, `jwt`, `oauth-oidc-saml`, `session` |
 | `logica` | `business-logic`, `race-condition` |
 | `api` | `api-rest-grpc-websocket`, `graphql` |
@@ -172,6 +172,10 @@ engagements/<slug>/
 | Varios proxies o balanceadores en cadena, HTTP/2 en el borde | `request-smuggling` |
 | Cookies de sesión sin `SameSite`; acciones que cambian estado | `csrf`, `clickjacking` |
 | `Access-Control-Allow-Origin` en las respuestas | `cors` |
+| JSONP (`callback=`), ficheros `.js` con datos del usuario, cookies `SameSite=None` | `xssi` |
+| Entrada reflejada como HTML pero sin ejecución de scripts (saneador o CSP) | `xss` §4.14 (inyección HTML) |
+| Envío de SMS u OTP, campos de teléfono, códigos de verificación | `authentication` §4.11 |
+| Productos perimetrales o CMS identificados (VPN, MDM, WordPress…) | `config-exposure` §4.14 |
 | Chat, asistente, «resumir», «preguntar a la IA», agentes, RAG | `llm-ai` |
 | Cabeceras, versiones, ficheros expuestos, paneles, buckets | `config-exposure` |
 | Bloqueos 403/406 ante los payloads, cabeceras de WAF | `waf-bypass` |
@@ -216,9 +220,10 @@ corvus/
 │   ├── 04-validacion.md           ← 7 puertas, falsos positivos, prompt del validador
 │   ├── 05-informe.md              ← estructura ES/EN, CVSS 3.1/4.0, redacción
 │   ├── 06-herramientas.md         ← catálogo, MCP, Docker, alternativas
-│   ├── vulns/*.md                 ← 32 referencias por clase de vulnerabilidad
+│   ├── vulns/*.md                 ← 33 referencias por clase de vulnerabilidad
 │   └── whitebox/*.md              ← metodología de código, sumideros por lenguaje, secretos y dependencias
 ├── templates/                     ← ficheros base del encargo y del hallazgo
+├── payloads/upload/               ← kit de ficheros PoC inocuos (SVG, HTML, políglotas con marcador)
 ├── scripts/corvus.py              ← init | scope-check | http | jwt | redact | status | cvss | report
 └── assets/                        ← logo.svg, report.css
 ```

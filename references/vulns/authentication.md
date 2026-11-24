@@ -179,6 +179,41 @@ email=cuentaB@auditor.tld%0d%0acc:cuentaA@auditor.tld
 - **WebAuthn/passkeys**: el servidor debe validar `challenge` de un solo uso, `origin`, `rpIdHash`, firma y contador. Revisa sobre todo los *fallbacks*: si la cuenta con passkey sigue permitiendo login por contraseña o por SMS sin MFA, la protección es solo aparente.
 - *Magic links*: token reutilizable, sin caducidad, o válido en otro navegador sin confirmación cuando la política exige lo contrario.
 
+
+### 4.11 Normalización de teléfonos y códigos: saltarse los límites por variante
+
+Muchos límites de intentos se aplican a la **cadena exacta** recibida, mientras que la validación posterior **normaliza** el valor. Si dos cadenas distintas acaban siendo el mismo teléfono o el mismo código, cada variante cuenta como un intento nuevo.
+
+**Números de teléfono.** El formato URI de teléfono (RFC 3966) admite parámetros tras `;`, y las librerías como libphonenumber aceptan muchas formas del mismo número:
+
+```text
++34600000000          0034600000000         600000000
++34 600 000 000       +34-600-000-000       +34 (600) 000000
++34600000000;ext=1    +34600000000;ext=2    +34600000000;isub=1234
++34600000000;phone-context=+34
+```
+
+1. Con **tu propio número de prueba**, pide códigos hasta que salte el límite («demasiados intentos»).
+2. Repite la petición con una variante equivalente. Si se envía otro SMS o el contador se reinicia, el límite se salta. Impacto: fuerza bruta de OTP y **envío masivo de SMS** (*SMS pumping*), con coste económico para el cliente.
+3. Si la aplicación refleja o almacena el valor completo, prueba también la inyección en el parámetro: `+34600000000;phone-context=<i>corvus</i>` (ver `vulns/xss.md`) o `;phone-context=https://OAST/` cuando el valor se usa para construir URLs.
+
+⚠️ Cada SMS cuesta dinero al cliente y molesta a un tercero si el número no es tuyo: usa solo números de prueba propios, limita la prueba a ≤ 5 envíos y pide confirmación antes de cualquier prueba de volumen.
+
+**Códigos OTP y de verificación.** El servidor puede recortar espacios, convertir a número o normalizar Unicode antes de comparar, mientras que el contador de intentos usa la cadena original:
+
+```text
+123456%00     123456%20     123456%0a     123456%09     %20123456     0123456
++123456       123456.0      １２３４５６ (dígitos de ancho completo)
+{"code": 123456}   {"code": "123456 "}   {"code": ["000000","000001","000002"]}   {"code": true}
+```
+
+1. Con tu cuenta de prueba, agota los intentos con códigos erróneos.
+2. Envía variantes erróneas con sufijos: si el servidor sigue respondiendo «código incorrecto» en lugar de «bloqueado», el contador no las cuenta.
+3. Envía el código **correcto** con un sufijo (`123456%20`). Si lo acepta, la normalización está confirmada y la fuerza bruta es viable con ese margen de intentos extra.
+4. `{"code": true}`, `0` o un array delatan comparaciones laxas o validación por lotes (ver §4.5).
+
+Evidencia: el registro de payloads con la secuencia completa (intentos, bloqueo y variantes aceptadas) y la captura del control (la variante bloqueada cuando el límite funciona bien).
+
 ## 5. Evasión de límites y WAF
 
 - Rotar `X-Forwarded-For` y similares solo si el servidor los usa para el límite; comprueba primero con dos valores distintos si el contador se reinicia.

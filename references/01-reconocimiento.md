@@ -1,6 +1,6 @@
 # Fase 1 — Reconocimiento y mapa de la superficie de ataque
 
-**Contenido:** 0. Reglas de la fase · 1. Pasivo · 2. Huella tecnológica · 3. Descubrimiento de contenido · 4. Análisis de JavaScript · 5. APIs · 6. Mapa de entradas · 7. Autenticación, roles y sesión · 8. Infraestructura, CDN y WAF · 9. Funcionalidades de IA · 10. Resumen de superficie y priorización
+**Contenido:** 0. Reglas de la fase · 1. Pasivo (y dorking) · 2. Huella tecnológica · 3. Descubrimiento de contenido · 4. Análisis de JavaScript · 5. APIs · 6. Mapa de entradas · 7. Autenticación, roles y sesión · 8. Infraestructura, CDN y WAF · 9. Funcionalidades de IA · 10. Resumen de superficie y priorización
 
 Mapea antes de atacar. Un buen reconocimiento decide qué clases de fallo merece la pena cazar, y suele destapar por sí solo hallazgos (ficheros expuestos, rutas de administración, secretos en JavaScript). Referencia WSTG: WSTG-INFO-01 a WSTG-INFO-10.
 
@@ -31,6 +31,48 @@ gh search code "cliente.com" --limit 50
 ```
 
 Los subdominios que aparezcan **no** entran en alcance automáticamente: van a `notes.md` como «candidatos» y se consultan con el auditor.
+
+
+### 1.1 Dorking: buscadores, código y servicios expuestos
+
+El *dorking* consiste en usar operadores avanzados de buscadores para encontrar información indexada sobre el objetivo. Es pasivo hacia el cliente, pero todo lo que aparezca es un **candidato**: pasa por `scope-check` antes de tocarlo y no accedas a contenido de terceros que requiera autenticación.
+
+**Google o Bing**
+
+```text
+site:cliente.com ext:pdf OR ext:xlsx OR ext:docx OR ext:csv
+site:cliente.com ext:bak OR ext:old OR ext:sql OR ext:log OR ext:env OR ext:conf
+site:cliente.com intitle:"index of"
+site:cliente.com inurl:admin OR inurl:login OR inurl:dashboard OR inurl:debug
+site:*.cliente.com -site:www.cliente.com
+site:cliente.com inurl:swagger OR inurl:api-docs OR inurl:graphql
+"cliente.com" site:trello.com OR site:atlassian.net OR site:pastebin.com OR site:postman.com
+"cliente.com" site:s3.amazonaws.com OR site:blob.core.windows.net OR site:storage.googleapis.com
+```
+
+**GitHub y GitLab** (código, configuraciones y secretos filtrados por empleados o proveedores):
+
+```bash
+gh search code '"cliente.com" password' --limit 30
+gh search code '"cliente.com" filename:.env' --limit 30
+gh search code '"api.cliente.com" Authorization' --limit 30
+gh search code 'org:cliente-oficial "api_key"' --limit 30
+gh search code '"internal.cliente.com" OR "intranet.cliente.com"' --limit 30
+```
+
+Un secreto encontrado se anota **por tipo y ubicación** y no se usa (ver `00-alcance-roe.md` §6, «Credenciales reales encontradas»). Comprobar si sigue siendo válido requiere autorización expresa.
+
+**Shodan y Censys** (servicios expuestos a Internet):
+
+```text
+ssl.cert.subject.cn:"cliente.com"            hostname:"cliente.com"
+org:"Cliente S.L."                           http.title:"Cliente"
+http.favicon.hash:<hash del favicon>         ssl:"cliente.com" port:8443
+```
+
+`uncover` (ProjectDiscovery) reúne varios motores: `uncover -q 'ssl:"cliente.com"' -e shodan,censys`. Necesita sus claves de API.
+
+Lo que salga (IPs, puertos, paneles, versiones) va a `notes.md` como candidatos y se cruza con §2 (huella tecnológica) y con `vulns/config-exposure.md` §4.14 (productos con CVE conocidos).
 
 ## 2. Huella tecnológica (WSTG-INFO-02, 08, 09)
 

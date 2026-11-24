@@ -93,7 +93,7 @@ La OWASP *Web Security Testing Guide* (WSTG) es el estándar de facto de metodol
 | BUSL-10 | Funcionalidad de pago | `vulns/business-logic.md` |
 | **CLNT**-01 | XSS basado en DOM | `vulns/xss.md` |
 | CLNT-02 | Ejecución de JavaScript | `vulns/xss.md` |
-| CLNT-03 | Inyección HTML | `vulns/xss.md` |
+| CLNT-03 | Inyección HTML | `vulns/xss.md` §4.14 |
 | CLNT-04 | Redirección en el cliente | `vulns/open-redirect.md` |
 | CLNT-05 | Inyección CSS | `vulns/xss.md` |
 | CLNT-06 | Manipulación de recursos en el cliente | `vulns/xss.md`, `vulns/prototype-pollution.md` |
@@ -102,7 +102,7 @@ La OWASP *Web Security Testing Guide* (WSTG) es el estándar de facto de metodol
 | CLNT-10 | WebSockets | `vulns/api-rest-grpc-websocket.md` |
 | CLNT-11 | Mensajería web (`postMessage`) | `vulns/xss.md` |
 | CLNT-12 | Almacenamiento del navegador | `vulns/session.md` |
-| CLNT-13 | Inclusión de scripts entre sitios (XSSI) | `vulns/cors.md` |
+| CLNT-13 | Inclusión de scripts entre sitios (XSSI) | `vulns/xssi.md` |
 | CLNT-14 | *Reverse tabnabbing* | `vulns/open-redirect.md` |
 | **APIT**-01 | GraphQL | `vulns/graphql.md` |
 | (fuera de WSTG) | Caché web, *prototype pollution*, *race conditions* de un solo paquete, LLM | `vulns/cache-poisoning-deception.md`, `vulns/prototype-pollution.md`, `vulns/race-condition.md`, `vulns/llm-ai.md` |

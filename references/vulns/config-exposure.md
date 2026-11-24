@@ -234,6 +234,42 @@ curl -sk -X POST -H 'X-HTTP-Method-Override: DELETE' -i https://t/api/recurso/ID
 
 `/robots.txt` y `/sitemap.xml` son fuentes de rutas (paneles, entornos antiguos), no vulnerabilidades: lo que importa es si las rutas listadas están protegidas. La ausencia de `/.well-known/security.txt` (RFC 9116) es informativa; si existe, úsalo como canal de contacto y comprueba que no haya caducado (`Expires`).
 
+
+### 4.14 Productos perimetrales y CMS con CVE explotados activamente
+
+VPN, pasarelas de correo, gestores de dispositivos móviles, servidores de impresión, almacenamiento compatible con S3 y plugins de CMS concentran muchos de los CVE explotados de forma masiva. No hace falta una lista fija: el método es **identificar el producto y la versión → consultar fuentes fiables → confirmar con la prueba menos intrusiva posible**.
+
+1. **Identificar el producto**: página de inicio de sesión, rutas características, `Server`, el hash del favicon (§1.1 de `01-reconocimiento.md`), el `readme.txt` de los plugins de WordPress (`/wp-content/plugins/<slug>/readme.txt` → «Stable tag»).
+2. **Consultar fuentes**: el catálogo **CISA KEV** (vulnerabilidades explotadas activamente), los avisos del fabricante y la puntuación EPSS (probabilidad de explotación).
+
+```bash
+curl -s https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json \
+ | jq -r '.vulnerabilities[] | select(.vendorProject|test("Fortinet|Ivanti|PaperCut|MinIO";"i")) | "\(.cveID)  \(.product)  \(.vulnerabilityName)"'
+```
+
+3. **Confirmar sin explotar**: busca la plantilla concreta de nuclei y **léela antes de lanzarla**, porque algunas ejecutan el exploit:
+
+```bash
+nuclei -u https://vpn.cliente.com -id CVE-2018-13379 -rl 2
+```
+
+Si la única forma de confirmar es explotar (lectura de ficheros, salto de autenticación), pide confirmación ⚠️ y limita la prueba a una lectura inocua.
+
+Ejemplos frecuentes en auditorías (comprueba siempre el aviso del fabricante y las versiones afectadas):
+
+| Producto | CVE | Tipo | Señal de reconocimiento |
+|---|---|---|---|
+| Fortinet FortiOS SSL-VPN | CVE-2018-13379 | Lectura de ficheros (sesiones VPN) | `/remote/login` |
+| Ivanti EPMM (MobileIron Core) | CVE-2023-35078 | Salto de autenticación en la API | `/mifs/` |
+| PaperCut NG/MF | CVE-2023-27350 | Salto de autenticación → RCE | `/app?service=page/SetupCompleted` |
+| MinIO (despliegue en clúster) | CVE-2023-28432 | Revelación de variables de entorno (credenciales) | `/minio/bootstrap/v1/verify` |
+| WooCommerce Payments (WordPress) | CVE-2023-28121 | Salto de autenticación por cabecera | `readme.txt` del plugin |
+| BackupBuddy (WordPress) | CVE-2022-31474 | Lectura arbitraria de ficheros | `readme.txt` del plugin |
+| nginx (módulo de rangos) | CVE-2017-7529 | Revelación de memoria de la caché | Versión de `Server` y `Range` |
+| Apache HTTP Server 2.4.49/2.4.50 | CVE-2021-41773 / CVE-2021-42013 | Path traversal → RCE | Ver `vulns/path-traversal-lfi.md` |
+
+Los CVE de **denegación de servicio** (por ejemplo, la carga masiva de `load-scripts.php` en WordPress) solo se notifican por versión y **no se prueban**.
+
 ## 5. Evasión de filtros y defensas (guardrails, WAF)
 
 - Variaciones de ruta para ficheros bloqueados: `/.git//HEAD`, `/%2egit/HEAD`, `/.git/HEAD;.css`, `/static/..;/actuator/env` (Tomcat/Spring), `/actuator;/env`, mayúsculas en IIS.

