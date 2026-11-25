@@ -783,7 +783,8 @@ def build_markdown(eng: Path, lang: str, findings: list[dict], brand: dict, rete
     L.append(f"| **{T['engagement']}** | {f.get('encargo', eng.name)} |")
     L.append(f"| **{T['period']}** | {period} |")
     L.append(f"| **{T['type']}** | {f.get('tipo de prueba', '—')} · {T['env']}: {f.get('entorno', '—')} |")
-    L.append(f"| **{T['author']}** | {brand.get('auditor', '')} — {brand.get('marca', '')} |")
+    if brand.get("auditor"):
+        L.append(f"| **{T['author']}** | {brand['auditor']} — {brand.get('marca', '')} |")
     L.append(f"| **{T['date']}** | {today()} |")
     L.append(f"| **{T['version']}** | {f.get('versión del informe', '1.0')} |")
     L.append("")
@@ -950,6 +951,8 @@ def build_html(md: str, brand: dict, lang: str, eng_name: str, title: str) -> st
     web, mail = brand.get("web", ""), brand.get("email", "")
     contacto = " · ".join(html.escape(x.replace("https://", "")) for x in (web, mail) if x)
     contacto = f'<span class="cover-contact">{contacto}</span><br>' if contacto else ""
+    autor = " · ".join(html.escape(x) for x in (brand.get("auditor", ""), rol) if x)
+    autor = f"{autor}<br>" if autor else ""
     cover = f"""
 <section class="cover">
   <div class="cover-logo">{logo}</div>
@@ -957,7 +960,7 @@ def build_html(md: str, brand: dict, lang: str, eng_name: str, title: str) -> st
   <div class="cover-tag">{html.escape(lema)}</div>
   <h1 class="cover-title">{html.escape(title)}</h1>
   <div class="cover-eng">{html.escape(eng_name)}</div>
-  <div class="cover-meta">{html.escape(brand.get('auditor', ''))} · {html.escape(rol)}<br>{contacto}{today()}</div>
+  <div class="cover-meta">{autor}{contacto}{today()}</div>
   <div class="cover-class">{html.escape(clasif)}</div>
 </section>"""
     return f"""<!doctype html>

@@ -1,17 +1,17 @@
 {
   "marca": "CORVUS Red",
-  "submarca": "by Iván Pérez",
+  "submarca": "Web Security Audit",
   "lema": {
-    "es": "Encuentro los fallos de tu web antes de que lo haga un atacante.",
-    "en": "I find the flaws in your web before an attacker does."
+    "es": "Auditoría de seguridad web con método: cada hallazgo, verificado.",
+    "en": "Web security auditing with method: every finding, verified."
   },
-  "auditor": "Iván Pérez",
+  "auditor": "",
   "rol_auditor": {
-    "es": "Auditor de seguridad y pentester",
-    "en": "Security auditor & penetration tester"
+    "es": "",
+    "en": ""
   },
-  "web": "https://ivanperezf.es",
-  "email": "contacto@ivanperezf.es",
+  "web": "",
+  "email": "",
   "logo": "assets/logo.svg",
   "colores": {
     "primario": "#166534",

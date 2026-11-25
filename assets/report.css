@@ -1,4 +1,4 @@
-/* CORVUS Red by Iván Pérez — estilo del informe (pantalla e impresión A4).
+/* CORVUS Red — estilo del informe (pantalla e impresión A4).
    Las variables (--primario, --fondo, --font-*, --sev-*, --sevt-*) las genera corvus.py desde brand.json. */
 @page { size: A4; margin: 18mm 16mm 20mm 16mm; }
 * { box-sizing: border-box; }
@@ -19,7 +19,7 @@ body { margin: 0; color: var(--texto); background: #fff; font-family: var(--font
   background-image: radial-gradient(circle, rgba(15, 23, 42, .16) 1px, transparent 1.6px);
   background-size: 22px 22px; }
 .cover::after { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 6px; background: var(--primario); }
-.cover-logo svg { width: 76px; height: 76px; display: block; }
+.cover-logo svg { width: 104px; height: 104px; display: block; margin-left: -6px; }
 .cover-brand { margin-top: 22px; font-family: var(--font-titulos); font-size: 2.5rem; font-weight: 800; letter-spacing: -.01em;
   color: var(--oscuro); line-height: 1.1; }
 .cover-brand span { display: block; margin-top: 6px; font-family: var(--font-tecnica); font-size: .95rem; font-weight: 600;
