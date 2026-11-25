@@ -5,7 +5,7 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) y 
 ## [1.2.0] — 2026-11-25
 
 ### Cambiado
-- **Identidad visual propia de CORVUS Red**: logo nuevo (cuervo geométrico con pico en dos facetas verdes y ojo píxel neón), banner y lema propios («Auditoría de seguridad web con método: cada hallazgo, verificado.»).
+- **Identidad visual propia de CORVUS Red**: logo nuevo (cuervo heráldico con las alas abiertas, en facetas oscuras, con la cabeza de perfil, el pico verde y el ojo píxel neón; el mismo del banner), banner y lema propios («Auditoría de seguridad web con método: cada hallazgo, verificado.»).
 - Paleta clara con verde `#166534`, trama de puntos y colores de severidad; tipografías Inter, Mona Sans y Chakra Petch incluidas e incrustadas en los informes.
 - Informe rediseñado: portada clara, cuadrado y filete verdes en los títulos, severidades con cuadrado de color y etiqueta técnica.
 - Los informes ya no llevan autor por defecto: si `auditor`, `web` o `email` están vacíos en `brand.json`, no aparecen. Cada auditor firma con su `brand.local.json`.
