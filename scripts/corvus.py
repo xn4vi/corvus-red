@@ -897,15 +897,45 @@ def build_markdown(eng: Path, lang: str, findings: list[dict], brand: dict, rete
     return "\n".join(L), warns
 
 
+def _embedded_fonts() -> str:
+    """Incrusta como @font-face las .woff2 de assets/fonts/ (Familia-Peso.woff2 o Familia[wght].woff2)."""
+    import base64
+
+    weights = {"thin": 100, "extralight": 200, "light": 300, "regular": 400, "medium": 500,
+               "semibold": 600, "bold": 700, "extrabold": 800, "black": 900}
+    out = []
+    for f in sorted((SKILL_DIR / "assets" / "fonts").glob("*.woff2")):
+        stem = f.stem
+        family = re.split(r"[-\[]", stem)[0]
+        family = re.sub(r"(?<=[a-z])(?=[A-Z])", " ", family)  # MonaSans → Mona Sans
+        low = stem.lower()
+        if "[" in stem or "variable" in low:
+            weight = "100 900"
+        else:
+            weight = next((str(v) for k, v in sorted(weights.items(), key=lambda x: -len(x[0])) if k in low), "400")
+        style = "italic" if "italic" in low else "normal"
+        data = base64.b64encode(f.read_bytes()).decode()
+        out.append(f"@font-face{{font-family:'{family}';font-weight:{weight};font-style:{style};font-display:swap;"
+                   f"src:url(data:font/woff2;base64,{data}) format('woff2')}}")
+    return "\n".join(out) + ("\n" if out else "")
+
+
 def build_html(md: str, brand: dict, lang: str, eng_name: str, title: str) -> str:
     css = read(SKILL_DIR / "assets" / "report.css")
     logo = read(SKILL_DIR / brand.get("logo", "assets/logo.svg"))
     col = brand.get("colores", {})
     sevc = brand.get("severidad_colores", {})
-    vars_css = ":root{" + ";".join([
-        f"--primario:{col.get('primario', '#B3121F')}", f"--oscuro:{col.get('oscuro', '#0E0F13')}",
-        f"--acento:{col.get('acento', '#E8E6E1')}", f"--texto:{col.get('texto', '#1B1C20')}",
-    ] + [f"--sev-{i}:{sevc.get(s, '#666')}" for i, s in enumerate(SEV_ORDER)]) + "}"
+    sevt = brand.get("severidad_texto", {})
+    fonts = brand.get("tipografias", {})
+    stack = {"texto": "system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif",
+             "titulos": "'Segoe UI', system-ui, Arial, sans-serif",
+             "tecnica": "'Segoe UI Semibold', 'Segoe UI', system-ui, sans-serif"}
+    vars_css = ":root{" + ";".join(
+        [f"--{k.replace('_', '-')}:{v}" for k, v in col.items()]
+        + [f"--font-{k}:{(chr(39) + fonts[k] + chr(39) + ', ') if fonts.get(k) else ''}{stack[k]}" for k in stack]
+        + [f"--sev-{i}:{sevc.get(s, '#666')}" for i, s in enumerate(SEV_ORDER)]
+        + [f"--sevt-{i}:{sevt.get(s, sevc.get(s, '#333'))}" for i, s in enumerate(SEV_ORDER)]) + "}"
+    vars_css = _embedded_fonts() + vars_css
     body = md_to_html(md)
     # insignias de severidad en celdas
     labels = {**{s: i for i, s in enumerate(SEV_ORDER)}, **{SEV_EN[s]: i for i, s in enumerate(SEV_ORDER)}}
@@ -917,6 +947,9 @@ def build_html(md: str, brand: dict, lang: str, eng_name: str, title: str) -> st
     lema = brand.get("lema", {}).get(lang, "")
     clasif = brand.get("clasificacion", {}).get(lang, "")
     rol = brand.get("rol_auditor", {}).get(lang, "")
+    web, mail = brand.get("web", ""), brand.get("email", "")
+    contacto = " · ".join(html.escape(x.replace("https://", "")) for x in (web, mail) if x)
+    contacto = f'<span class="cover-contact">{contacto}</span><br>' if contacto else ""
     cover = f"""
 <section class="cover">
   <div class="cover-logo">{logo}</div>
@@ -924,7 +957,7 @@ def build_html(md: str, brand: dict, lang: str, eng_name: str, title: str) -> st
   <div class="cover-tag">{html.escape(lema)}</div>
   <h1 class="cover-title">{html.escape(title)}</h1>
   <div class="cover-eng">{html.escape(eng_name)}</div>
-  <div class="cover-meta">{html.escape(brand.get('auditor', ''))} · {html.escape(rol)}<br>{today()}</div>
+  <div class="cover-meta">{html.escape(brand.get('auditor', ''))} · {html.escape(rol)}<br>{contacto}{today()}</div>
   <div class="cover-class">{html.escape(clasif)}</div>
 </section>"""
     return f"""<!doctype html>

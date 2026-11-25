@@ -6,8 +6,8 @@
 | **Encargo** | Laboratorio OWASP Juice Shop |
 | **Periodo de pruebas** | 2026-11-24 — 2026-11-24 |
 | **Tipo de prueba** | caja negra (con registro libre de cuentas) · Entorno: laboratorio local (Docker, imagen oficial bkimminich/juice-shop) |
-| **Auditor** | n4vi — CORVUS Red |
-| **Fecha del informe** | 2026-11-24 |
+| **Auditor** | Iván Pérez — CORVUS Red |
+| **Fecha del informe** | 2026-11-25 |
 | **Versión** | 1.0 |
 
 ## 1. Resumen ejecutivo

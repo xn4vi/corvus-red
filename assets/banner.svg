@@ -1,38 +1,32 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 360" role="img" aria-label="CORVUS Red — auditor de seguridad de aplicaciones web para Claude Code">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 360" role="img" aria-label="CORVUS Red by Iván Pérez — auditor de seguridad de aplicaciones web para Claude Code">
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#0E0F13"/>
-      <stop offset="1" stop-color="#17090B"/>
-    </linearGradient>
-    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
-      <path d="M32 0H0V32" fill="none" stroke="#1E2027" stroke-width="1"/>
+    <pattern id="dots" width="22" height="22" patternUnits="userSpaceOnUse">
+      <circle cx="11" cy="11" r="1.1" fill="#0f172a" fill-opacity=".16"/>
     </pattern>
-    <radialGradient id="glow" cx="0.2" cy="0.5" r="0.5">
-      <stop offset="0" stop-color="#B3121F" stop-opacity="0.35"/>
-      <stop offset="1" stop-color="#B3121F" stop-opacity="0"/>
-    </radialGradient>
   </defs>
-  <rect width="1280" height="360" fill="url(#bg)"/>
-  <rect width="1280" height="360" fill="url(#grid)"/>
-  <rect width="1280" height="360" fill="url(#glow)"/>
-  <rect x="0" y="352" width="1280" height="8" fill="#B3121F"/>
+  <rect width="1280" height="360" fill="#f4f6f8"/>
+  <rect width="1280" height="360" fill="url(#dots)"/>
+  <rect x="0" y="0" width="1280" height="6" fill="#166534"/>
+  <rect x="0.5" y="0.5" width="1279" height="359" fill="none" stroke="#e3e7ed"/>
 
-  <!-- emblema -->
-  <g transform="translate(120 70) scale(1.85)">
-    <polygon points="60,4 108,32 108,88 60,116 12,88 12,32" fill="#0E0F13" stroke="#B3121F" stroke-width="4"/>
-    <path d="M18,60 L46,47 L58,33 L77,30 L93,40 L99,58 L92,76 L86,98 L62,93 L50,76 L38,67 Z" fill="#E8E6E1"/>
-    <path d="M18,60 L46,47 L40,58 Z" fill="#B3121F"/>
-    <path d="M62,93 L72,72 L86,98 Z M76,66 L92,76 L86,98 Z" fill="#B9B6AE"/>
-    <circle cx="67" cy="45" r="4.5" fill="#B3121F"/>
-    <circle cx="67" cy="45" r="1.6" fill="#0E0F13"/>
+  <!-- escudo de ivanperezf.es -->
+  <g transform="translate(96 96) scale(2.6)">
+    <rect width="64" height="64" rx="14" fill="#0a0f1a"/>
+    <g transform="translate(32 32) scale(1.08) translate(-32 -31.5)">
+      <path d="M51 33.5C51 44 43 51.5 32 56C21 51.5 13 44 13 33.5V14L32 7L51 14V20.5" fill="none" stroke="#ffffff" stroke-width="5.5" stroke-linejoin="round"/>
+      <rect x="47.5" y="23.5" width="7" height="7" fill="#39ff14"/>
+    </g>
   </g>
 
-  <g font-family="Segoe UI, Inter, Helvetica Neue, Arial, sans-serif">
-    <text x="400" y="150" font-size="86" font-weight="800" letter-spacing="10" fill="#E8E6E1">CORVUS<tspan fill="#B3121F"> RED</tspan></text>
-    <text x="404" y="196" font-size="22" letter-spacing="9" fill="#B3121F">OFFENSIVE SECURITY · CLAUDE CODE SKILL</text>
-    <text x="404" y="244" font-size="26" fill="#C9C5BC">Auditor de seguridad de aplicaciones web — del alcance al informe</text>
-    <text x="404" y="292" font-family="Cascadia Code, JetBrains Mono, Consolas, monospace" font-size="18" fill="#8A8780">
-      <tspan fill="#B3121F">$</tspan> /corvus alcance → recon → caza → validar → informe
+  <g font-family="Mona Sans, Inter, Segoe UI, Helvetica Neue, Arial, sans-serif">
+    <text x="330" y="132" font-size="74" font-weight="800" fill="#0b1220" letter-spacing="-1">CORVUS Red</text>
+    <rect x="332" y="156" width="11" height="11" fill="#166534"/>
+    <text x="354" y="167" font-family="Chakra Petch, Segoe UI Semibold, Segoe UI, Arial, sans-serif" font-size="18" font-weight="600" letter-spacing="5" fill="#166534">BY IVÁN PÉREZ · CLAUDE CODE SKILL</text>
+    <text x="332" y="226" font-size="31" font-weight="700" fill="#0b1220">Encuentro los fallos de tu web</text>
+    <text x="332" y="266" font-size="31" font-weight="700" fill="#14532d">antes de que lo haga un atacante.</text>
+    <text x="332" y="312" font-family="Cascadia Mono, Consolas, ui-monospace, monospace" font-size="17" fill="#3f4a5c">
+      <tspan fill="#166534">$</tspan> /corvus alcance → recon → caza → validar → informe
     </text>
   </g>
+  <text x="1236" y="334" text-anchor="end" font-family="Chakra Petch, Segoe UI, Arial, sans-serif" font-size="15" letter-spacing="2" fill="#98a3b6">IVANPEREZF.ES</text>
 </svg>

@@ -1,30 +1,39 @@
 {
   "marca": "CORVUS Red",
-  "submarca": "Offensive Security",
+  "submarca": "by Iván Pérez",
   "lema": {
-    "es": "Inteligencia ofensiva para aplicaciones web",
-    "en": "Offensive intelligence for web applications"
+    "es": "Encuentro los fallos de tu web antes de que lo haga un atacante.",
+    "en": "I find the flaws in your web before an attacker does."
   },
-  "auditor": "n4vi",
+  "auditor": "Iván Pérez",
   "rol_auditor": {
-    "es": "Auditor de seguridad ofensiva",
-    "en": "Offensive Security Consultant"
+    "es": "Auditor de seguridad y pentester",
+    "en": "Security auditor & penetration tester"
   },
-  "web": "https://github.com/xn4vi/corvus-red",
-  "email": "",
+  "web": "https://ivanperezf.es",
+  "email": "contacto@ivanperezf.es",
   "logo": "assets/logo.svg",
   "colores": {
-    "primario": "#B3121F",
-    "oscuro": "#0E0F13",
-    "acento": "#E8E6E1",
-    "texto": "#1B1C20"
+    "primario": "#166534",
+    "primario_oscuro": "#14532d",
+    "acento": "#39ff14",
+    "oscuro": "#0b1220",
+    "marca_fondo": "#0a0f1a",
+    "fondo": "#f4f6f8",
+    "banda": "#eef1f4",
+    "banda_acento": "#eef7f1",
+    "borde": "#e3e7ed",
+    "borde_fuerte": "#d2d8e1",
+    "texto": "#2a3445",
+    "texto_suave": "#3f4a5c",
+    "tenue": "#98a3b6"
   },
   "severidad_colores": {
-    "Crítica": "#7A0010",
-    "Alta": "#D1291C",
-    "Media": "#E08A00",
-    "Baja": "#2B7BB9",
-    "Informativa": "#6B7280"
+    "Crítica": "#dc2626",
+    "Alta": "#ea580c",
+    "Media": "#eab308",
+    "Baja": "#16a34a",
+    "Informativa": "#2563eb"
   },
   "clasificacion": {
     "es": "CONFIDENCIAL — Uso exclusivo del cliente",
@@ -33,5 +42,17 @@
   "aviso_legal": {
     "es": "Este informe refleja el estado de seguridad de los sistemas evaluados durante el periodo de pruebas indicado y dentro del alcance autorizado. Las pruebas de intrusión son una evaluación en un momento concreto: la ausencia de hallazgos en un área no garantiza la ausencia de vulnerabilidades. La información contenida es confidencial y no debe distribuirse sin el consentimiento del cliente.",
     "en": "This report reflects the security posture of the assessed systems during the stated testing window and within the authorized scope. Penetration testing is a point-in-time assessment: the absence of findings in an area does not guarantee the absence of vulnerabilities. This document is confidential and must not be distributed without the client's consent."
+  },
+  "tipografias": {
+    "texto": "Inter",
+    "titulos": "Mona Sans",
+    "tecnica": "Chakra Petch"
+  },
+  "severidad_texto": {
+    "Crítica": "#921125",
+    "Alta": "#8f2f0d",
+    "Media": "#6b4600",
+    "Baja": "#14532d",
+    "Informativa": "#1e40af"
   }
 }

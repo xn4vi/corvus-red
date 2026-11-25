@@ -4,13 +4,16 @@
 
 **Skill para [Claude Code](https://docs.claude.com/en/docs/claude-code) que convierte a Claude en un auditor de seguridad de aplicaciones web: metódico al reconocer, creativo al atacar, escéptico al validar y claro al informar.**
 
-[![License: MIT](https://img.shields.io/badge/licencia-MIT-B3121F.svg)](LICENSE)
-[![Fichas](https://img.shields.io/badge/fichas-33%20vulns%20%2B%203%20caja%20blanca-0E0F13.svg)](#-índice-de-fichas)
-[![Idioma](https://img.shields.io/badge/idioma-español%20·%20informes%20ES%2FEN-B3121F.svg)](#)
-[![OWASP](https://img.shields.io/badge/OWASP-WSTG%20·%20Top%2010%3A2025%20·%20API%20·%20LLM-0E0F13.svg)](#-metodología)
-[![CI](https://github.com/xn4vi/corvus-red/actions/workflows/ci.yml/badge.svg)](https://github.com/xn4vi/corvus-red/actions/workflows/ci.yml)
+Creada por **[Iván Pérez](https://ivanperezf.es)**, auditor de seguridad y pentester: la misma metodología que uso en mis auditorías, empaquetada para Claude.
 
-[Qué es](#-qué-es) &bull; [Instalación](#-instalación) &bull; [Uso](#-uso) &bull; [Metodología](#-metodología) &bull; [Fichas](#-índice-de-fichas) &bull; [Informe de ejemplo](#-informe-de-ejemplo) &bull; [Roadmap](#-roadmap) &bull; [Contribuir](#-contribuir)
+[![License: MIT](https://img.shields.io/badge/licencia-MIT-166534.svg)](LICENSE)
+[![Fichas](https://img.shields.io/badge/fichas-33%20vulns%20%2B%203%20caja%20blanca-0b1220.svg)](#-índice-de-fichas)
+[![Idioma](https://img.shields.io/badge/idioma-español%20·%20informes%20ES%2FEN-166534.svg)](#)
+[![OWASP](https://img.shields.io/badge/OWASP-WSTG%20·%20Top%2010%3A2025%20·%20API%20·%20LLM-0b1220.svg)](#-metodología)
+[![CI](https://github.com/xn4vi/corvus-red/actions/workflows/ci.yml/badge.svg)](https://github.com/xn4vi/corvus-red/actions/workflows/ci.yml)
+[![Autor](https://img.shields.io/badge/by-Iván%20Pérez-14532d.svg)](https://ivanperezf.es)
+
+[Qué es](#-qué-es) &bull; [Instalación](#-instalación) &bull; [Uso](#-uso) &bull; [Metodología](#-metodología) &bull; [Fichas](#-índice-de-fichas) &bull; [Informe de ejemplo](#-informe-de-ejemplo) &bull; [Roadmap](#-roadmap) &bull; [Autor](#-sobre-el-autor) &bull; [Contribuir](#-contribuir)
 
 </div>
 
@@ -19,7 +22,7 @@
 > [!WARNING]
 > **Solo para pruebas autorizadas.** CORVUS Red se niega a enviar tráfico a un objetivo sin un alcance con la autorización confirmada. Úsala en encargos con autorización escrita, en programas de bug bounty dentro de sus reglas o en laboratorios propios. Lee [SECURITY.md](SECURITY.md).
 
-## 🐦‍⬛ Qué es
+## 🛡️ Qué es
 
 CORVUS Red es una **skill de Claude Code** (un `SKILL.md` con referencias y scripts que Claude carga bajo demanda). No es solo una colección de payloads: es un **flujo de auditoría completo**, con reglas que Claude no puede saltarse, que va del alcance firmado al informe entregable con tu marca.
 
@@ -54,13 +57,15 @@ Para instalarla solo en un proyecto, usa `scripts/install.sh --project` (o `inst
 
 **Requisitos:** Claude Code y Python 3.10 o superior para `scripts/corvus.py`, que solo usa la biblioteca estándar. Chrome o Edge son opcionales y sirven para generar el PDF. Las herramientas externas (sqlmap, ffuf, nuclei, jwt_tool, interactsh…) también son opcionales: la skill las propone solo cuando hacen falta y ofrece una imagen Docker oficial si no las tienes.
 
-**Pon tu firma** en los informes sin tocar el repositorio:
+Los informes salen por defecto con la marca **CORVUS Red by Iván Pérez** (colores, tipografías y escudo de [ivanperezf.es](https://ivanperezf.es)). **Para usar tu propia marca** sin tocar el repositorio:
 
 ```bash
 cp ~/.claude/skills/corvus/brand.json ~/.claude/skills/corvus/brand.local.json   # y edita "auditor", colores, lema…
 ```
 
-`brand.local.json` está en `.gitignore` y tiene prioridad sobre `brand.json`.
+`brand.local.json` está en `.gitignore` y tiene prioridad sobre `brand.json`. Puedes cambiar el logo (`logo`), los colores, las tipografías (`tipografias`) y los colores de severidad.
+
+**Tipografías del informe:** usa Inter, Mona Sans y Chakra Petch si están instaladas y, si no, Segoe UI o la fuente del sistema. Para que el PDF sea idéntico en cualquier equipo, deja los ficheros `.woff2` en `assets/fonts/` (por ejemplo `Inter[wght].woff2`, `MonaSans[wght].woff2`, `ChakraPetch-SemiBold.woff2`): `corvus.py report` los incrusta en el informe.
 
 ## 🕹️ Uso
 
@@ -104,9 +109,9 @@ flowchart LR
     E -->|REQUIERE TRABAJO| D
     E --> F[5 · Informe<br/>MD · HTML · PDF · ES/EN]
     F --> G[6 · Retest]
-    style A fill:#0E0F13,stroke:#B3121F,color:#E8E6E1
-    style E fill:#0E0F13,stroke:#B3121F,color:#E8E6E1
-    style F fill:#B3121F,stroke:#B3121F,color:#fff
+    style A fill:#eef7f1,stroke:#166534,color:#0b1220
+    style E fill:#eef7f1,stroke:#166534,color:#0b1220
+    style F fill:#166534,stroke:#14532d,color:#fff
 ```
 
 ### Reglas innegociables (resumen)
@@ -239,7 +244,7 @@ Auditoría real de punta a punta contra **OWASP Juice Shop 20.4** en un laborato
 ```text
 corvus-red/
 ├── SKILL.md                 ← cerebro de la skill: reglas, flujo, modos, enrutado de referencias
-├── brand.json               ← marca pública (sobrescribible con brand.local.json)
+├── brand.json               ← marca CORVUS Red by Iván Pérez (sobrescribible con brand.local.json)
 ├── references/
 │   ├── 00-alcance-roe.md … 06-herramientas.md    ← guías de fase
 │   ├── vulns/               ← 33 fichas de vulnerabilidad
@@ -247,7 +252,7 @@ corvus-red/
 ├── templates/               ← scope, coverage, payload-log, notes, tech-stack, hallazgo
 ├── payloads/upload/         ← kit de ficheros PoC inocuos (marcadores y OAST, nunca shells)
 ├── scripts/                 ← corvus.py · install.sh · install.ps1
-├── assets/                  ← logo, banner, CSS del informe, capturas
+├── assets/                  ← escudo, banner, CSS del informe, capturas, fonts/ (opcional)
 ├── examples/juice-shop/     ← informe de ejemplo
 ├── tests/ · tools/          ← tests de corvus.py y comprobador de fichas
 └── .github/                 ← CI, plantillas de issues y PR
@@ -262,6 +267,23 @@ corvus-red/
 - [ ] Actualizar `coverage.md` automáticamente a partir de `corvus.py http`
 - [ ] Fichas nuevas: XS-Leaks, inyección CSS avanzada, WebSocket smuggling, ataques de HTTP/2
 - [ ] Traducción de las fichas al inglés
+
+## 👤 Sobre el autor
+
+<table>
+<tr>
+<td width="84"><img src="assets/logo.svg" width="72" alt="Escudo de Iván Pérez"/></td>
+<td>
+
+**Iván Pérez** · Auditor de seguridad y pentester · Gijón, Asturias
+
+Hago auditorías de seguridad y pentesting para webs, tiendas online, apps móviles, APIs y productos creados con IA, con cada fallo verificado y explicado: qué riesgo supone para el negocio y cómo corregirlo.
+
+🌐 [ivanperezf.es](https://ivanperezf.es) · ✉️ [contacto@ivanperezf.es](mailto:contacto@ivanperezf.es) · 📄 [Informe de ejemplo](https://ivanperezf.es/informe-de-ejemplo/) · 💼 [Servicios](https://ivanperezf.es/servicios/)
+
+</td>
+</tr>
+</table>
 
 ## 🤝 Contribuir
 
@@ -279,6 +301,6 @@ python -m unittest discover -s tests -v && python tools/check_refs.py
 
 ## ⚖️ Licencia
 
-[MIT](LICENSE) © 2026 n4vi. Incluye contenido adaptado de claude-red bajo MIT (ver [NOTICE.md](NOTICE.md)).
+[MIT](LICENSE) © 2026 [Iván Pérez](https://ivanperezf.es). Incluye contenido adaptado de claude-red bajo MIT (ver [NOTICE.md](NOTICE.md)).
 
-<div align="center"><sub>Hecho con 🐦‍⬛ para auditores que prefieren un hallazgo sólido a cinco dudosos.</sub></div>
+<div align="center"><sub>🛡️ <a href="https://ivanperezf.es">ivanperezf.es</a> · Para auditores que prefieren un hallazgo sólido a cinco dudosos.</sub></div>
