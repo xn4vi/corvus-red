@@ -10,7 +10,7 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) y 
 - Informe rediseñado: portada clara, cuadrado y filete verdes en los títulos, severidades con cuadrado de color y etiqueta técnica.
 - Los informes ya no llevan autor por defecto: si `auditor`, `web` o `email` están vacíos en `brand.json`, no aparecen. Cada auditor firma con su `brand.local.json`.
 - `brand.json` admite `tipografias`, `severidad_texto` y cualquier color en `colores`, que llegan al CSS como variables.
-- Banner del README oscuro y animado en estilo (cuadrícula, halo verde, terminal con un encargo real) y `assets/social-preview.png` (1280×640) para la vista previa social del repositorio.
+- Banner minimalista (fondo negro, emblema con halo, «corvus red» en tipografía ligera, cifra de fichas y ola de partículas) que sirve también como vista previa social: `assets/social-preview.png` (1280×640).
 
 ## [1.1.0] — 2026-11-24
 
