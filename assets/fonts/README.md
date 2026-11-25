@@ -1,6 +1,6 @@
 # Tipografías del informe (opcional)
 
-Deja aquí ficheros `.woff2` y `corvus.py report` los incrustará en el HTML y el PDF, de modo que el informe se vea igual en cualquier equipo.
+`corvus.py report` incrusta en el HTML y el PDF todos los ficheros `.woff2` de esta carpeta, así que el informe se ve igual en cualquier equipo. **Ya vienen incluidas** las fuentes de la marca (subconjunto latino de Google Fonts, unos 118 KB). Sus licencias están en `licenses/`.
 
 La marca por defecto usa (todas con licencia SIL Open Font License, que permite incrustarlas):
 

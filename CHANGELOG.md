@@ -8,7 +8,7 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) y 
 - Identidad visual de **CORVUS Red by Iván Pérez** ([ivanperezf.es](https://ivanperezf.es)): escudo con el píxel verde, verde corporativo `#166534`, fondo claro con trama de puntos y colores de severidad de la web.
 - Informe rediseñado: portada clara, cuadrado y filete verdes en los títulos, severidades con cuadrado de color y etiqueta técnica, y web y correo de contacto en la portada.
 - `brand.json` admite `tipografias`, `severidad_texto` y cualquier color en `colores`; todos llegan al CSS como variables.
-- `corvus.py report` incrusta las fuentes `.woff2` que haya en `assets/fonts/`.
+- `corvus.py report` incrusta las fuentes `.woff2` que haya en `assets/fonts/`; se incluyen Inter, Mona Sans y Chakra Petch (Google Fonts, SIL OFL 1.1, con sus licencias en `assets/fonts/licenses/`).
 - README, banner y LICENSE con la autoría de Iván Pérez.
 
 ## [1.1.0] — 2026-11-24

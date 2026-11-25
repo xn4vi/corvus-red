@@ -65,7 +65,7 @@ cp ~/.claude/skills/corvus/brand.json ~/.claude/skills/corvus/brand.local.json  
 
 `brand.local.json` está en `.gitignore` y tiene prioridad sobre `brand.json`. Puedes cambiar el logo (`logo`), los colores, las tipografías (`tipografias`) y los colores de severidad.
 
-**Tipografías del informe:** usa Inter, Mona Sans y Chakra Petch si están instaladas y, si no, Segoe UI o la fuente del sistema. Para que el PDF sea idéntico en cualquier equipo, deja los ficheros `.woff2` en `assets/fonts/` (por ejemplo `Inter[wght].woff2`, `MonaSans[wght].woff2`, `ChakraPetch-SemiBold.woff2`): `corvus.py report` los incrusta en el informe.
+**Tipografías del informe:** Inter, Mona Sans y Chakra Petch vienen incluidas en `assets/fonts/` (licencia SIL OFL, unos 118 KB) y `corvus.py report` las incrusta en el HTML y el PDF, así que el informe se ve igual en cualquier equipo. Para usar otras, sustituye los `.woff2` y ajusta `tipografias` en tu `brand.local.json`.
 
 ## 🕹️ Uso
 

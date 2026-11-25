@@ -9,6 +9,10 @@ CORVUS Red es una skill propia. Su metodología y sus referencias se han redacta
 | [AlbusSec/Penetration-List](https://github.com/AlbusSec/Penetration-List) | Sin licencia publicada | Solo como lista de comprobación de temas (XSSI, inyección HTML, trucos de teléfono y OTP, dorking, CVE perimetrales). No se ha copiado ningún fichero ni wordlist; el contenido está redactado de nuevo. |
 | [Snyk — Top Claude Skills for Cybersecurity](https://snyk.io/es/articles/top-claude-skills-cybersecurity-hacking-vulnerability-scanning/) | Artículo | Buenas prácticas de diseño (divulgación progresiva, guardarraíles, aprobación humana, degradación elegante) e ideas de Trail of Bits (análisis de variantes, revisión diferencial) y de agamm/claude-code-owasp (OWASP 2025, ASVS 5.0). |
 
+## Tipografías incluidas
+
+`assets/fonts/` incluye Inter (© The Inter Project Authors), Mona Sans (© The Mona Sans Project Authors / GitHub) y Chakra Petch (© The Chakra Petch Project Authors), descargadas de Google Fonts y distribuidas bajo la **SIL Open Font License 1.1**. Los textos completos de las licencias están en `assets/fonts/licenses/`.
+
 ## Texto de la licencia MIT de claude-red
 
 ```
